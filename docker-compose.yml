@@ -1,0 +1,26 @@
+version: '3.3'
+
+services:
+  web:
+    container_name: web
+    build: 
+      context: ./
+      dockerfile: ./.environment/Dockerfile
+    volumes:
+      - ./:/var/www/html
+      - ./.environment/vhosts:/etc/apache2/sites-enabled
+    ports:
+      - 80
+    links:
+      - db
+  
+  db:
+    container_name: data
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports: 
+      - 27017
+      - 27018
+      - 27019
